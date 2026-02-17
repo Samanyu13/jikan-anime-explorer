@@ -5,7 +5,6 @@ import com.example.jikananimeexplorer.data.remote.dto.AnimeDto
 import com.example.jikananimeexplorer.domain.model.Anime
 
 object AnimeMapper {
-
     // DTO → Entity
     fun dtoToEntity(dto: AnimeDto): AnimeEntity {
 

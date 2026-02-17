@@ -5,9 +5,7 @@ import androidx.work.*
 import java.util.concurrent.TimeUnit
 
 object SyncScheduler {
-
     fun schedulePeriodicSync(context: Context) {
-
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()
@@ -27,7 +25,6 @@ object SyncScheduler {
     }
 
     fun triggerOneTimeSync(context: Context) {
-
         val constraints = Constraints.Builder()
             .setRequiredNetworkType(NetworkType.CONNECTED)
             .build()

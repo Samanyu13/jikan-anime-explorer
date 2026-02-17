@@ -75,21 +75,21 @@ fun AnimeDetailScreen(
                 .fillMaxSize()
         ) {
             when (uiState) {
-                // ---------------- LOADING ----------------
+                // LOADING
                 is AnimeDetailUiState.Loading -> {
                     CircularProgressIndicator(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
 
-                // ---------------- SUCCESS ----------------
+                // SUCCESS
                 is AnimeDetailUiState.Success -> {
                     val anime =
                         (uiState as AnimeDetailUiState.Success).anime
                     AnimeDetailContent(anime)
                 }
 
-                // ---------------- ERROR ----------------
+                // ERROR
                 is AnimeDetailUiState.Error -> {
                     Text(
                         text = (uiState as AnimeDetailUiState.Error).message,

@@ -60,18 +60,14 @@ fun AnimeList(
     onAnimeClick: (Int) -> Unit,
     padding: PaddingValues
 ) {
-
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(padding)
     ) {
-
         items(pagingItems.itemCount) { index ->
 
             val anime = pagingItems[index]
-
             anime?.let {
                 AnimeItem(
                     anime = it,
@@ -80,12 +76,9 @@ fun AnimeList(
             }
         }
 
-        /* ---------- Load States ---------- */
-
+        // Paging LoadStates
         pagingItems.apply {
-
             when {
-
                 loadState.refresh is LoadState.Loading -> {
                     item { LoadingItem() }
                 }
@@ -95,10 +88,8 @@ fun AnimeList(
                 }
 
                 loadState.refresh is LoadState.Error -> {
-
                     val error =
                         loadState.refresh as LoadState.Error
-
                     item {
                         ErrorItem(
                             message = error.error.message ?: "",
@@ -132,7 +123,6 @@ fun AnimeItem(
                     .size(100.dp)
                     .clip(RoundedCornerShape(12.dp))
             )
-
             Spacer(modifier = Modifier.width(12.dp))
 
             Column {
@@ -152,7 +142,6 @@ fun AnimeItem(
 
 @Composable
 fun LoadingItem() {
-
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -168,14 +157,12 @@ fun ErrorItem(
     message: String,
     onRetry: () -> Unit
 ) {
-
     Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-
         Text(text = message)
         Spacer(modifier = Modifier.height(8.dp))
         Button(onClick = onRetry) {

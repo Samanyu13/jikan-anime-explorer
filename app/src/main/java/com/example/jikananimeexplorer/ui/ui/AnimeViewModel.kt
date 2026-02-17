@@ -17,46 +17,26 @@ import javax.inject.Inject
 class AnimeViewModel @Inject constructor(
     private val repository: AnimeRepository
 ) : ViewModel() {
-
-    /* ------------------------------------------------ */
-    /* Paging List                                      */
-    /* ------------------------------------------------ */
-
-    /*
-       Paging flow exposed to UI
-       cachedIn() prevents refetch during config change
-     */
+    // Paging flow exposed to UI
     val animePagingFlow: Flow<PagingData<Anime>> =
         repository
             .getTopAnimePaging()
             .cachedIn(viewModelScope)
 
 
-    /* ------------------------------------------------ */
-    /* Detail Screen State                              */
-    /* ------------------------------------------------ */
-
+    // Detail Screen State
     private val _animeDetailState =
         MutableStateFlow<AnimeDetailUiState>(AnimeDetailUiState.Idle)
-
     val animeDetailState: StateFlow<AnimeDetailUiState> =
         _animeDetailState
 
 
-    /* ------------------------------------------------ */
-    /* Fetch Anime Detail                               */
-    /* ------------------------------------------------ */
-
+    // Fetch Anime Detail
     fun fetchAnimeDetail(animeId: Int) {
-
         viewModelScope.launch {
-
             _animeDetailState.value = AnimeDetailUiState.Loading
-
             try {
-
                 val anime = repository.getAnimeDetail(animeId)
-
                 if (anime != null) {
                     _animeDetailState.value =
                         AnimeDetailUiState.Success(anime)
@@ -66,7 +46,6 @@ class AnimeViewModel @Inject constructor(
                 }
 
             } catch (e: Exception) {
-
                 _animeDetailState.value =
                     AnimeDetailUiState.Error(
                         e.message ?: "Something went wrong"
@@ -75,11 +54,7 @@ class AnimeViewModel @Inject constructor(
         }
     }
 
-
-    /* ------------------------------------------------ */
-    /* Reset Detail State (useful when leaving screen)  */
-    /* ------------------------------------------------ */
-
+    // Reset Detail State (Unused as of now)
     fun clearDetailState() {
         _animeDetailState.value = AnimeDetailUiState.Idle
     }
