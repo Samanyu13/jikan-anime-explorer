@@ -15,7 +15,6 @@ import java.io.IOException
 class AnimeRemoteMediator(
     private val animeApi: AnimeApi, private val database: AnimeDatabase
 ) : RemoteMediator<Int, AnimeEntity>() {
-
     private val animeDao = database.animeDao()
     private val remoteKeysDao = database.remoteKeysDao()
 
@@ -26,7 +25,6 @@ class AnimeRemoteMediator(
         return try {
 
             val page = when (loadType) {
-
                 LoadType.REFRESH -> {
                     val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
                     remoteKeys?.nextKey?.minus(1) ?: 1
@@ -49,14 +47,13 @@ class AnimeRemoteMediator(
                 }
             }
 
-            // 🌐 Network Call
+            // Network Call
             val response = animeApi.getTopAnime(page)
 
             val animeList = response.data
             val endOfPaginationReached = !response.pagination.has_next_page
 
             database.withTransaction {
-
                 if (loadType == LoadType.REFRESH) {
                     remoteKeysDao.clearRemoteKeys()
                     animeDao.clearAll()
@@ -86,8 +83,6 @@ class AnimeRemoteMediator(
         }
     }
 
-    // ---------- Helper Functions ----------
-
     private suspend fun getRemoteKeyForLastItem(
         state: PagingState<Int, AnimeEntity>
     ): RemoteKeys? {
@@ -100,7 +95,6 @@ class AnimeRemoteMediator(
     private suspend fun getRemoteKeyForFirstItem(
         state: PagingState<Int, AnimeEntity>
     ): RemoteKeys? {
-
         return state.pages.firstOrNull { it.data.isNotEmpty() }?.data?.firstOrNull()?.let { anime ->
                 remoteKeysDao.getRemoteKeys(anime.id)
             }
@@ -109,7 +103,6 @@ class AnimeRemoteMediator(
     private suspend fun getRemoteKeyClosestToCurrentPosition(
         state: PagingState<Int, AnimeEntity>
     ): RemoteKeys? {
-
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.id?.let { id ->
                 remoteKeysDao.getRemoteKeys(id)

@@ -15,7 +15,7 @@ interface AnimeApi {
     ): AnimeResponse
 
 
-    // Anime Details
+    // Individual Anime Details
     @GET("anime/{id}")
     suspend fun getAnimeDetails(
         @Path("id") id: Int

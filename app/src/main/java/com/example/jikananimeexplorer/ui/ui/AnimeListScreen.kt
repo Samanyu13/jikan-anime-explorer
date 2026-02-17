@@ -33,6 +33,8 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import coil.compose.AsyncImage
 import com.example.jikananimeexplorer.domain.model.Anime
+import retrofit2.HttpException
+import java.io.IOException
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -92,7 +94,7 @@ fun AnimeList(
                         loadState.refresh as LoadState.Error
                     item {
                         ErrorItem(
-                            message = error.error.message ?: "",
+                            message = error.error.toUserFriendlyMessage(),
                             onRetry = { retry() }
                         )
                     }
@@ -168,5 +170,13 @@ fun ErrorItem(
         Button(onClick = onRetry) {
             Text("Retry")
         }
+    }
+}
+
+fun Throwable.toUserFriendlyMessage(): String {
+    return when (this) {
+        is IOException -> "No internet connection. Please check your network."
+        is HttpException -> "Server error: ${code()}"
+        else -> "Something went wrong."
     }
 }

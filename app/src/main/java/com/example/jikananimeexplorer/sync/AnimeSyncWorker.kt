@@ -41,7 +41,7 @@ class AnimeSyncWorker @AssistedInject constructor(
                     delay(300)
                 }
 
-                // Keep only first 100
+                // Keep only first MAX_CACHE_ITEM_COUNT
                 val top100 = allAnime.take(MAX_CACHE_ITEM_COUNT)
 
                 animeDao.clearAll()

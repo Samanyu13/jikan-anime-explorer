@@ -54,6 +54,7 @@ fun AnimeDetailScreen(
                     val title = when (uiState) {
                         is AnimeDetailUiState.Success ->
                             (uiState as AnimeDetailUiState.Success).anime.title
+
                         else -> "Anime Detail"
                     }
                     Text(title)
@@ -96,6 +97,7 @@ fun AnimeDetailScreen(
                         modifier = Modifier.align(Alignment.Center)
                     )
                 }
+
                 else -> {}
             }
         }
@@ -109,7 +111,7 @@ fun AnimeDetailContent(anime: Anime) {
             .verticalScroll(rememberScrollState())
             .padding(16.dp)
     ) {
-        // ---------------- Poster ----------------
+        // Poster
         AsyncImage(
             model = anime.posterUrl,
             contentDescription = anime.title,
@@ -121,31 +123,30 @@ fun AnimeDetailContent(anime: Anime) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ---------------- Title ----------------
+        // Title
         Text(
             text = anime.title,
             style = MaterialTheme.typography.headlineSmall
         )
         Spacer(modifier = Modifier.height(8.dp))
 
-        // ---------------- Score ----------------
+        // Score
         anime.score?.let {
             Text("⭐ Score: $it")
         }
 
-        // ---------------- Episodes ----------------
+        // Episodes
         anime.episodes?.let {
             Text("Episodes: $it")
         }
         Spacer(modifier = Modifier.height(12.dp))
 
-        // ---------------- Genres ----------------
+        // Genres
         if (anime.genres.isNotEmpty()) {
             Text(
                 text = "Genres",
                 style = MaterialTheme.typography.titleMedium
             )
-
             Spacer(modifier = Modifier.height(8.dp))
             FlowRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -160,7 +161,7 @@ fun AnimeDetailContent(anime: Anime) {
         }
         Spacer(modifier = Modifier.height(16.dp))
 
-        // ---------------- Synopsis ----------------
+        // Synopsis
         anime.synopsis?.let {
             Text(
                 text = "Synopsis",
